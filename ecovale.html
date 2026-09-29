@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EcoVale – Protótipo do app</title>
+<style>
+:root{--g9:#073b2b;--g7:#0f8a52;--g5:#2ecc71;--g1:#e6f6ec;--y:#ffc93c;--bg:#f3f8f5;--card:#fff;--tx:#12271d;--mu:#61766a;--bd:#e0ece5;--os:#dfe9e3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1912;--card:#152a1f;--tx:#eaf5ee;--mu:#9bb2a4;--bd:#23392c;--g1:#1a3a29;--os:#07110c}}
+:root[data-theme="dark"]{--bg:#0c1912;--card:#152a1f;--tx:#eaf5ee;--mu:#9bb2a4;--bd:#23392c;--g1:#1a3a29;--os:#07110c}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--os);font:400 15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);display:flex;align-items:center;justify-content:center}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--y);outline-offset:2px}
+.app{position:relative;width:100%;height:100%;background:var(--bg);overflow:hidden;display:flex;flex-direction:column}
+@media(min-width:520px){.app{width:390px;height:min(820px,96vh);border-radius:44px;border:10px solid #0a1f15;box-shadow:0 30px 70px rgba(0,0,0,.35)}}
+.in{flex:1;min-height:0;display:flex;flex-direction:column}
+.sc{flex:1;overflow-y:auto;padding:20px 18px 24px;animation:in .3s ease}
+@keyframes in{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+h1,h2,h3,p{margin:0}h2{font-size:22px}h3{font-size:16px}
+.mu{color:var(--mu)}.sm{font-size:13px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:16px}
+.btn{width:100%;min-height:54px;border-radius:18px;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.p{background:var(--g7);color:#fff}.y{background:var(--y);color:#3a2b00}.o{background:var(--g1);color:var(--g7);border:1.5px solid var(--g5)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .o{color:var(--g5)}}
+.hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--y);display:grid;place-items:center;font-weight:800;color:#3a2b00}
+.bal{background:linear-gradient(140deg,var(--g9),var(--g7));color:#fff;border-radius:26px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden}
+.bal:after{content:"♻";position:absolute;right:-10px;top:-24px;font-size:120px;opacity:.12}
+.bal b{display:block;font-size:36px;letter-spacing:-1px;color:var(--y)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.st b{display:block;font-size:22px}
+.list{display:flex;flex-direction:column;gap:10px}
+.it{display:flex;align-items:center;gap:12px}
+.ic{width:44px;height:44px;border-radius:14px;background:var(--g1);display:grid;place-items:center;font-size:22px;flex:none}
+.it .gr{flex:1}.pl{color:var(--g7);font-weight:700}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .pl{color:var(--g5)}}
+.nav{display:flex;background:var(--card);border-top:1px solid var(--bd);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--mu);padding:6px 0;border-radius:14px;min-height:52px}
+.nav span{font-size:22px;transition:transform .2s}
+.nav .on{color:var(--g7);font-weight:700}.nav .on span{transform:translateY(-2px) scale(1.15)}
+.nav .mid span{background:var(--g7);color:#fff;border-radius:50%;width:38px;height:38px;display:grid;place-items:center;font-size:20px}
+input{width:100%;height:54px;border:1.5px solid var(--bd);border-radius:16px;padding:0 16px;font:inherit;background:var(--card);color:var(--tx);margin-bottom:12px}
+input:focus{border-color:var(--g5);outline:0}
+.login{background:linear-gradient(170deg,var(--g9),var(--g7) 45%,var(--bg) 45%);padding-top:48px}
+.lg{text-align:center;color:#fff;margin-bottom:48px}
+.lg .lo{width:84px;height:84px;margin:0 auto 12px;border-radius:26px;background:var(--y);display:grid;place-items:center;font-size:44px;box-shadow:0 12px 28px rgba(0,0,0,.25);animation:pop .6s both}
+@keyframes pop{from{transform:scale(.5);opacity:0}}
+.lg h1{font-size:32px}
+.mats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 16px}
+.mt{background:var(--card);border:2px solid var(--bd);border-radius:18px;padding:12px 4px;text-align:center;font-size:13px;font-weight:600;transition:.15s}
+.mt span{display:block;font-size:26px}.mt.on{border-color:var(--g5);background:var(--g1)}
+.wt{display:flex;align-items:center;justify-content:space-between;margin:10px 0 14px}
+.wt button{width:48px;height:48px;border-radius:50%;background:var(--g1);font-size:24px;font-weight:700;color:var(--g7)}
+.wt b{font-size:34px}
+.sum{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--bd)}
+.sum:last-child{border:0}
+.tot{background:var(--g1);border-radius:16px;padding:14px;display:flex;justify-content:space-between;align-items:center;margin:12px 0 16px}
+.tot b{font-size:28px;color:var(--g7)}
+.ok{text-align:center;padding-top:24px}
+.ck{width:96px;height:96px;border-radius:50%;background:var(--g5);color:#fff;font-size:52px;display:grid;place-items:center;margin:0 auto 16px;animation:pop .5s both}
+.map{height:230px;border-radius:24px;overflow:hidden;position:relative;margin-bottom:14px;background:#dcefe2;border:1px solid var(--bd)}
+.map svg{width:100%;height:100%}
+.pin{cursor:pointer}.pin circle{transition:r .2s}.pin:hover circle{r:17}
+.chip{display:inline-block;background:var(--g1);color:var(--g7);border-radius:999px;padding:2px 9px;font-size:12px;margin:6px 4px 0 0}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip{color:var(--g5)}}
+.pt{margin-bottom:10px}.pt .btn{min-height:44px;margin-top:10px;font-size:14px}
+.pt.sel{border-color:var(--g5);box-shadow:0 0 0 2px var(--g5)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--bd)}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.sg .mt small{display:block;font-weight:400;font-size:12px}.res{margin:0 0 12px;padding:22px 20px;text-align:center;animation:pop .45s both}.res b{font-size:46px}.res .rs{margin-top:14px;background:rgba(255,255,255,.12);border-radius:18px;padding:6px 14px;text-align:left}.res .rs b{font-size:15px;color:#fff}.res .sum{border-color:rgba(255,255,255,.25)}.nt{margin:0 4px 14px}
+.cam{border:2px dashed var(--g5);background:var(--g1);border-radius:22px;padding:18px;text-align:center}.ph{width:100%;height:170px;border-radius:16px;overflow:hidden;position:relative;display:grid;place-items:center;background:var(--card)}.ph img{width:100%;height:100%;object-fit:cover}.scan{position:absolute;left:0;right:0;height:3px;background:var(--y);box-shadow:0 0 14px var(--y);animation:sc 1.4s ease-in-out infinite}@keyframes sc{0%{top:0}50%{top:100%}100%{top:0}}button:disabled{cursor:not-allowed}
+.er{color:#d64545;font-size:13px;margin:-2px 2px 12px}
+.lb{display:block;font-size:13px;color:var(--mu);margin:0 4px 6px}input[type=date]{color-scheme:light dark}
+.mn{border-top:1px dashed var(--bd);padding-top:14px;margin-top:4px}
+.tm{background:var(--g1);border-radius:14px;padding:12px;font-size:13px;line-height:1.45;max-height:120px;overflow:auto;margin-bottom:12px}
+.ck2{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-bottom:14px;cursor:pointer}
+input[type=checkbox]{width:24px;height:24px;margin:0;flex:none;accent-color:var(--g7)}
+.qb{position:sticky;bottom:-24px;margin:16px -18px -24px;padding:14px 18px 24px;background:linear-gradient(transparent,var(--bg) 35%)}
+.mo{position:absolute;inset:0;background:rgba(6,20,13,.62);display:grid;place-items:center;padding:22px;z-index:20;animation:in .2s}
+.pp{background:var(--card);border-radius:28px;padding:24px 22px;width:100%;text-align:center;animation:pop .35s both}
+.pp .sum{text-align:left}.pts{font-size:36px;font-weight:800;color:var(--g7);margin:6px 0 10px}
+.qs{position:absolute;inset:0;z-index:21;background:linear-gradient(160deg,#052a1d,#0b3d2a);display:flex;flex-direction:column;color:#fff}
+.qs video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.qh{position:relative;display:flex;justify-content:space-between;align-items:center;padding:18px;background:linear-gradient(rgba(0,0,0,.6),transparent)}
+.fr{position:absolute;left:50%;top:40%;width:220px;height:220px;transform:translate(-50%,-50%);border:3px solid var(--y);border-radius:26px;box-shadow:0 0 0 999px rgba(0,0,0,.45);overflow:hidden}
+.qf{position:relative;margin-top:auto;padding:18px 18px calc(22px + env(safe-area-inset-bottom,0px));text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.75))}
+.toast{position:absolute;left:18px;right:18px;bottom:86px;background:var(--g9);color:#fff;border-radius:14px;padding:12px 16px;animation:in .3s;z-index:5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app"><div id="app" class="in"></div><div id="ov"></div></div>
+<script>
+var M=[{n:"Alumínio",i:"🥫",p:7},{n:"Plástico",i:"🧴",p:2.5},{n:"Papel",i:"📄",p:.8},{n:"Papelão",i:"📦",p:1.5},{n:"Vidro",i:"🍾",p:.3}];
+var P=[{n:"Mercado Verde Vida",d:"350 m",m:"Alumínio, Plástico, Vidro",h:"Seg–Sáb 8h–19h",x:110,y:120},{n:"EcoPonto Central",d:"800 m",m:"Papel, Papelão, Plástico",h:"Seg–Sex 9h–17h",x:250,y:70},{n:"Padaria Boa Terra",d:"1,2 km",m:"Alumínio, Papelão",h:"Todos os dias 6h–20h",x:290,y:170}];
+var S={qr:false,pop:false,u:{n:"Maria Silva",e:"maria@email.com"},err:"",scr:"login",mat:0,kg:5,pt:0,cm:0,cq:1,ck:null,ph:null,an:false,cr:false,bal:128.5,kg_t:47.3,cnt:12,last:null,toast:"",
+h:[{m:1,k:4,v:10,d:"22/09/2026"},{m:3,k:8,v:12,d:"18/09/2026"},{m:0,k:5,v:35,d:"12/09/2026"}]};
+var $=document.getElementById("app");
+function R(v){return "R$ "+v.toFixed(2).replace(".",",")}
+function K(v){return String(v).replace(".",",")}
+function PT(v){return Math.round(v*10).toLocaleString("pt-BR")}
+var ACC=[{n:"Maria Silva",e:"maria@email.com",p:"123456"}];
+try{var sv=JSON.parse(localStorage.getItem("ev_acc")||"[]");sv.forEach(function(a){if(!ACC.some(function(b){return b.e==a.e}))ACC.push(a)})}catch(e){}
+function keep(fn){var v={};[].forEach.call($.querySelectorAll("input"),function(i){v[i.id]=i.type=="checkbox"?i.checked:i.value});fn();draw();for(var k in v){var el=document.getElementById(k);if(el){if(el.type=="checkbox")el.checked=v[k];else el.value=v[k]}}}
+function fail(m){keep(function(){S.err=m})}
+function mask(i){var d=i.value.replace(/\D/g,"").slice(0,11);i.value=d.replace(/(\d{3})(\d)/,"$1.$2").replace(/(\d{3})(\d)/,"$1.$2").replace(/(\d{3})(\d{1,2})$/,"$1-$2")}
+function cpfOk(c){c=c.replace(/\D/g,"");if(c.length!=11||/^(\d)\1+$/.test(c))return false;for(var t=9;t<11;t++){var sm=0;for(var i=0;i<t;i++)sm+=c[i]*(t+1-i);if((sm*10%11)%10!=+c[t])return false}return true}
+function age(b){var d=new Date(b),n=new Date();if(isNaN(d)||d>n)return -1;var a=n.getFullYear()-d.getFullYear();if(n<new Date(n.getFullYear(),d.getMonth(),d.getDate()))a--;return a}
+function chkAge(){keep(function(){var a=age(val("sb"));S.mn=a>=0&&a<18;S.err=a<0&&val("sb")?"Data de nascimento inválida.":""})}
+function val(i){return document.getElementById(i).value.trim()}
+function demo(on){S.bal=on?128.5:0;S.kg_t=on?47.3:0;S.cnt=on?12:0;S.h=on?[{m:1,k:4,v:10,d:"22/09/2026"},{m:3,k:8,v:12,d:"18/09/2026"},{m:0,k:5,v:35,d:"12/09/2026"}]:[]}
+function doLogin(){var e=val("le").toLowerCase(),p=document.getElementById("lp").value;
+if(!e||!p){return fail("Preencha e-mail e senha.")}
+var a=ACC.filter(function(x){return x.e==e})[0];
+if(!a){return fail("Conta não encontrada. Toque em Criar conta.")}
+if(a.p!=p){return fail("Senha incorreta. Tente novamente.")}
+S.u={n:a.n,e:a.e,min:a.min,g:a.g};S.err="";demo(a.e=="maria@email.com");go("home")}
+function doSignup(){var n=val("sn"),e=val("se").toLowerCase(),p=document.getElementById("sp").value,c=val("sc"),ag=age(val("sb")),u={n:n,e:e,p:p};
+if(!n||!/^\S+@\S+\.\S+$/.test(e))return fail("Informe seu nome e um e-mail válido.");
+if(p.length<6)return fail("A senha precisa ter pelo menos 6 caracteres.");
+if(!cpfOk(c))return fail("CPF inválido. Confira os números.");
+if(ag<0)return fail("Informe uma data de nascimento válida.");
+if(ag>=125)return fail("Data de nascimento inválida.");
+if(ACC.some(function(x){return x.e==e}))return fail("Esse e-mail já tem conta. Volte e toque em Entrar.");
+if(ag<18){S.mn=true;var gn=val("gn"),gc=val("gc"),ga=age(val("gb"));
+if(!gn||!cpfOk(gc))return fail("Informe o nome e um CPF válido do responsável.");
+if(gc.replace(/\D/g,"")==c.replace(/\D/g,""))return fail("O CPF do responsável precisa ser diferente do seu.");
+if(ga<18)return fail("O responsável precisa ter 18 anos ou mais (confira a data de nascimento dele).");
+if(!document.getElementById("tm").checked)return fail("O responsável precisa aceitar os Termos de Responsabilidade.");
+u.min=true;u.g=gn}
+ACC.push(u);try{localStorage.setItem("ev_acc",JSON.stringify(ACC.slice(1)))}catch(x){}
+S.u={n:n,e:e,min:u.min,g:u.g};S.err="";S.mn=false;demo(false);go("home");toast("✔ Idade verificada")}
+function go(s){S.scr=s;draw()}
+function nav(){var t=[["home","🏠","Início"],["pts","📍","Pontos"],["reg","♻️","Reciclar"],["hist","📋","Histórico"]];
+return '<nav class="nav" aria-label="Navegação">'+t.map(function(x){var on=S.scr==x[0]||(x[0]=="reg"&&(S.scr=="ok"||S.scr=="calc"))||(x[0]=="home"&&S.scr=="perfil");return '<button class="'+(on?"on ":"")+(x[0]=="reg"?"mid":"")+'" onclick="go(\''+x[0]+'\')"><span>'+x[1]+'</span>'+x[2]+'</button>'}).join("")+'</nav>'}
+var V={
+login:function(){return '<div class="sc login"><div class="lg"><div class="lo">♻️</div><h1>EcoVale</h1><p style="opacity:.9;margin-top:6px">Transforme reciclagem em valor</p></div><div class="card" style="padding:20px"><input id="le" type="email" autocomplete="email" placeholder="E-mail" aria-label="E-mail"><input id="lp" type="password" autocomplete="current-password" placeholder="Senha" aria-label="Senha" onkeydown="if(event.key==\'Enter\')doLogin()">'+(S.err?'<p class="er" role="alert">'+S.err+'</p>':'')+'<button class="btn p" onclick="doLogin()">Entrar</button><button class="btn o" style="margin-top:10px" onclick="S.err=\'\';S.mn=false;go(\'signup\')">Criar conta</button><p class="mu sm" style="text-align:center;margin-top:12px">Conta de teste: maria@email.com · 123456</p></div></div>'},
+signup:function(){var mn=S.mn?'<div class="mn"><p><b>🛡️ Você é menor de 18 anos</b></p><p class="mu sm" style="margin-bottom:12px">Para usar o EcoVale, um responsável maior de idade precisa participar do cadastro.</p><input id="gn" placeholder="Nome do responsável" aria-label="Nome do responsável"><input id="gc" inputmode="numeric" maxlength="14" placeholder="CPF do responsável" aria-label="CPF do responsável" oninput="mask(this)"><label class="lb" for="gb">Nascimento do responsável</label><input id="gb" type="date"><div class="tm"><b>Termos de Responsabilidade</b><br>O responsável legal autoriza o uso do EcoVale pelo menor, acompanha as entregas de materiais e os valores recebidos, e assume a responsabilidade pelas transações feitas na conta.</div><label class="ck2"><input type="checkbox" id="tm"><span>Sou o responsável legal, li e concordo com os Termos de Responsabilidade.</span></label></div>':"";
+return '<div class="sc login"><div class="lg" style="margin-bottom:36px"><div class="lo" style="width:64px;height:64px;font-size:32px;border-radius:20px">♻️</div><h1 style="font-size:26px">Criar conta</h1></div><div class="card" style="padding:20px"><input id="sn" placeholder="Nome completo" aria-label="Nome" autocomplete="name"><input id="se" type="email" placeholder="E-mail" aria-label="E-mail" autocomplete="email"><input id="sp" type="password" placeholder="Senha (mín. 6 caracteres)" aria-label="Senha" autocomplete="new-password"><input id="sc" inputmode="numeric" maxlength="14" placeholder="Seu CPF" aria-label="Seu CPF" oninput="mask(this)"><label class="lb" for="sb">Data de nascimento</label><input id="sb" type="date" onchange="chkAge()">'+mn+(S.err?'<p class="er" role="alert">'+S.err+'</p>':'')+'<button class="btn p" onclick="doSignup()">Verificar idade e criar conta</button><button class="btn o" style="margin-top:10px" onclick="S.err=\'\';S.mn=false;go(\'login\')">Já tenho conta</button><p class="mu sm" style="text-align:center;margin-top:12px">CPFs de teste: 529.982.247-25 · 111.444.777-35</p></div></div>'},
+home:function(){var l=S.h[0],x=l?M[l.m]:null,fn=S.u.n.split(" ")[0];return '<div class="sc"><div class="hd"><div><p class="mu sm">Bem-vindo(a) de volta</p><h2>Olá, '+fn+'!</h2></div><button class="av" aria-label="Perfil" onclick="go(\'perfil\')">'+fn[0].toUpperCase()+'</button></div>'+
+(S.u.min?'<div class="card sm" style="margin-bottom:14px;background:var(--g1)">🛡️ Conta de menor · Responsável: <b>'+S.u.g+'</b></div>':'')+'<div class="bal"><p style="opacity:.85">Pontos disponíveis</p><b>'+PT(S.bal)+' pts</b><p class="sm" style="opacity:.85">≈ '+R(S.bal)+' para receber nos parceiros</p></div>'+
+'<div class="g2"><div class="card st"><span>⚖️</span><b>'+K(S.kg_t)+' kg</b><span class="mu sm">Reciclados</span></div><div class="card st"><span>🔁</span><b>'+S.cnt+'</b><span class="mu sm">Reciclagens</span></div></div>'+
+'<button class="btn y" onclick="go(\'reg\')">♻️ Registrar reciclagem</button><button class="btn o" style="margin:10px 0 0" onclick="go(\'pts\')">📍 Encontrar ponto parceiro</button><button class="btn o" style="margin:10px 0 18px" onclick="go(\'calc\')">🛍️ Quanto vale meu saco?</button>'+
+'<h3 style="margin-bottom:10px">Última reciclagem</h3>'+(l?'<div class="card it"><div class="ic">'+x.i+'</div><div class="gr"><b>'+x.n+'</b><p class="mu sm">'+K(l.k)+' kg · '+l.d+'</p></div><span class="pl">+'+PT(l.v)+' pts</span></div>':'<div class="card mu" style="text-align:center">Nenhuma reciclagem ainda. Registre a primeira!</div>')+'</div>'},
+reg:function(){var m=M[S.mat],v=S.kg*m.p;return '<div class="sc"><h2>Registrar reciclagem</h2><p class="mu">Escolha o material</p><div class="mats">'+M.map(function(x,i){return '<button class="mt '+(i==S.mat?"on":"")+'" onclick="S.mat='+i+';draw()"><span>'+x.i+'</span>'+x.n+'</button>'}).join("")+'</div>'+
+'<div class="card"><p class="mu sm">Peso</p><div class="wt"><button aria-label="Diminuir" onclick="S.kg=Math.max(1,S.kg-1);draw()">−</button><b>'+S.kg+' kg</b><button aria-label="Aumentar" onclick="S.kg++;draw()">+</button></div>'+
+'<div class="sum"><span class="mu">Material</span><b>'+m.i+' '+m.n+'</b></div><div class="sum"><span class="mu">Preço</span><b>'+R(m.p)+'/kg</b></div></div>'+
+'<div class="tot"><span>Valor estimado</span><b>'+R(v)+'</b></div><button class="btn p" onclick="fin()">Continuar</button><button class="btn o" style="margin-top:10px" onclick="go(\'calc\')">🛍️ Quanto vale meu saco?</button><div class="qb"><button class="btn y" onclick="openQR()">📷 Escanear QR Code da nota</button></div></div>'},
+calc:function(){var m=M[S.cm],kg=(S.ck||0)*S.cq,v=kg*m.p,ok=S.ck&&!S.an;
+var cam=S.an?'<div class="cam"><div class="ph"><img src="'+S.ph+'" alt="Foto do saco"><i class="scan"></i></div><p class="pl" style="margin-top:10px">🔍 Analisando o saco…</p></div>':S.ck?'<div class="cam"><div class="ph">'+(S.ph?'<img src="'+S.ph+'" alt="Foto do saco">':'<span style="font-size:48px">🛍️</span>')+'</div><p style="margin-top:10px"><b>Peso estimado por saco: ≈ '+K(S.ck)+' kg</b></p><label class="btn o" style="min-height:46px;margin-top:10px">📷 Tirar outra foto<input type="file" accept="image/*" capture="environment" hidden onchange="pick(this)"></label></div>':'<div class="cam"><div style="font-size:44px">📷</div><p class="mu sm" style="margin:6px 0 12px">Fotografe o saco para estimar o peso</p><label class="btn p">📷 Abrir câmera<input type="file" accept="image/*" capture="environment" hidden onchange="pick(this)"></label><button class="mu sm" style="margin-top:12px;text-decoration:underline" onclick="S.ck=5;S.ph=null;S.cr=false;draw()">Sem câmera? Estimar sem foto (≈ 5 kg)</button></div>';
+var r=S.cr&&ok?'<div class="bal res" id="res"><p style="opacity:.9">Seu saco vale aproximadamente</p><b>'+R(v)+'</b><div class="rs"><div class="sum"><span>Material</span><b>'+m.i+' '+m.n+'</b></div><div class="sum"><span>Quantidade</span><b>'+S.cq+(S.cq>1?" sacos":" saco")+'</b></div><div class="sum"><span>Peso estimado</span><b>'+K(kg)+' kg</b></div><div class="sum"><span>Valor estimado por kg</span><b>'+R(m.p)+'</b></div></div></div><p class="mu sm nt">ℹ️ Esse valor é apenas uma estimativa. O valor final será calculado após a pesagem no ponto parceiro.</p><button class="btn y" onclick="go(\'pts\')">📍 Encontrar ponto parceiro</button>':"";
+return '<div class="sc"><div class="hd"><button onclick="go(\'reg\')" aria-label="Voltar" style="font-size:24px">←</button><h2>Quanto vale meu saco?</h2><span style="width:24px"></span></div><p class="mu">Descubra uma estimativa antes de ir ao ponto parceiro.</p><h3 style="margin-top:16px">Material</h3><div class="mats">'+M.map(function(x,i){return '<button class="mt '+(i==S.cm?"on":"")+'" onclick="S.cm='+i+';S.cr=false;draw()"><span>'+x.i+'</span>'+x.n+'</button>'}).join("")+'</div>'+
+'<h3>Quantidade de sacos</h3><div class="card"><div class="wt" style="margin:0"><button aria-label="Diminuir" onclick="S.cq=Math.max(1,S.cq-1);S.cr=false;draw()">−</button><b>'+S.cq+'</b><button aria-label="Aumentar" onclick="S.cq=Math.min(20,S.cq+1);S.cr=false;draw()">+</button></div></div>'+
+'<h3 style="margin-top:16px">Foto do saco</h3>'+cam+
+'<button class="btn p" style="margin:16px 0;'+(ok?'':'opacity:.45')+'" '+(ok?'':'disabled ')+'onclick="S.cr=true;draw();document.getElementById(\'res\').scrollIntoView({behavior:\'smooth\'})">Calcular valor</button>'+r+'</div>'},
+ok:function(){var l=S.last;return '<div class="sc ok"><div class="ck">✓</div><h2>Reciclagem registrada!</h2><p class="mu" style="margin:6px 0 20px">Os pontos já estão na sua conta.</p><div class="card" style="text-align:left"><div class="sum"><span class="mu">Material</span><b>'+M[l.m].i+' '+M[l.m].n+'</b></div><div class="sum"><span class="mu">Peso</span><b>'+K(l.k)+' kg</b></div><div class="sum"><span class="mu">Pontos recebidos</span><b class="pl">+'+PT(l.v)+' pts</b></div><div class="sum"><span class="mu">Equivale a</span><b>'+R(l.v)+'</b></div><div class="sum"><span class="mu">Estabelecimento</span><b>'+P[S.pt].n+'</b></div><div class="sum"><span class="mu">Data</span><b>'+l.d+'</b></div></div><button class="btn p" style="margin-top:18px" onclick="go(\'home\')">Voltar para início</button></div>'},
+pts:function(){return '<div class="sc"><h2 style="margin-bottom:12px">Pontos parceiros</h2><div class="map"><svg viewBox="0 0 400 230" role="img" aria-label="Mapa com pontos parceiros"><rect width="400" height="230" fill="#dcefe2"/><path d="M0 150 Q100 100 200 140T400 100" stroke="#fff" stroke-width="16" fill="none"/><path d="M180 0 L210 230" stroke="#fff" stroke-width="12"/><path d="M0 40 L400 60" stroke="#fff" stroke-width="8"/><ellipse cx="330" cy="35" rx="50" ry="22" fill="#b9e3c8"/><circle cx="70" cy="195" r="26" fill="#b9e3c8"/><circle cx="190" cy="120" r="10" fill="#3b82f6" stroke="#fff" stroke-width="3"/>'+P.map(function(p,i){return '<g class="pin" onclick="S.pt='+i+';draw()"><circle cx="'+p.x+'" cy="'+p.y+'" r="'+(i==S.pt?17:13)+'" fill="'+(i==S.pt?"#ffc93c":"#0f8a52")+'" stroke="#fff" stroke-width="3"/><text x="'+p.x+'" y="'+(p.y+5)+'" text-anchor="middle" font-size="14">♻</text></g>'}).join("")+'</svg></div>'+
+P.map(function(p,i){return '<div class="card pt '+(i==S.pt?"sel":"")+'"><div class="it"><div class="ic">🏪</div><div class="gr"><b>'+p.n+'</b><p class="mu sm">📍 '+p.d+' de você</p></div></div><div>'+p.m.split(", ").map(function(c){return '<span class="chip">'+c+'</span>'}).join("")+'</div><p class="mu sm" style="margin-top:8px">🕒 '+p.h+'</p><button class="btn o" onclick="S.pt='+i+';toast(\'Ponto selecionado: '+p.n+'\')">Ver detalhes</button></div>'}).join("")+'</div>'},
+hist:function(){var t=S.h.reduce(function(a,x){return a+x.v},0);return '<div class="sc"><h2 style="margin-bottom:14px">Histórico</h2><div class="bal"><p style="opacity:.85">Total acumulado</p><b>'+R(t+S.bal-S.h.reduce(function(a,x){return a+x.v},0))+'</b></div><div class="list">'+(S.h.length?"":'<div class="card mu" style="text-align:center">Nenhuma reciclagem registrada.</div>')+S.h.map(function(x){return '<div class="card it"><div class="ic">'+M[x.m].i+'</div><div class="gr"><b>'+M[x.m].n+' — '+x.k+' kg</b><p class="mu sm">'+x.d+'</p></div><span class="pl">+'+R(x.v)+'</span></div>'}).join("")+'</div></div>'},
+perfil:function(){return '<div class="sc"><div class="hd"><button onclick="go(\'home\')" aria-label="Voltar" style="font-size:24px">←</button><h2>Perfil</h2><span style="width:24px"></span></div><div style="text-align:center;margin-bottom:18px"><div class="av" style="width:84px;height:84px;font-size:36px;margin:0 auto 10px">'+S.u.n[0].toUpperCase()+'</div><h2>'+S.u.n+'</h2><p class="mu">'+S.u.e+'</p></div><div class="g2"><div class="card st"><b>'+K(S.kg_t)+' kg</b><span class="mu sm">Total reciclado</span></div><div class="card st"><b>'+R(S.bal)+'</b><span class="mu sm">Total recebido</span></div></div><div class="card st" style="margin-bottom:14px"><b>'+S.cnt+'</b><span class="mu sm">Reciclagens realizadas</span></div><div class="card" style="padding:4px 16px">'+(S.u.min?'<div class="row"><span>🛡️ Responsável: '+S.u.g+'</span></div>':'')+'<div class="row"><span>⚙️ Configurações</span><span>›</span></div><div class="row"><span>🔔 Notificações</span><span>›</span></div><div class="row" style="border:0"><button onclick="S.err=\'\';go(\'login\')" style="color:#d64545">Sair</button></div></div></div>'}
+};
+function pick(i){var f=i.files[0];if(!f)return;S.ph=URL.createObjectURL(f);S.an=true;S.ck=null;S.cr=false;draw();setTimeout(function(){S.ck=Math.round((2+(f.size%80)/10)*2)/2;S.an=false;draw()},1600)}
+function add(mi,kg,pi){var v=kg*M[mi].p;S.last={m:mi,k:kg,v:v,d:new Date().toLocaleDateString("pt-BR")};S.h.unshift(S.last);S.bal+=v;S.kg_t=Math.round((S.kg_t+kg)*10)/10;S.cnt++;S.pt=pi;S.pop=true}
+function fin(){add(S.mat,S.kg,S.pt);go("ok");ov()}
+var CAM=null,TMR=null;
+function openQR(){S.qr=true;ov();startCam()}
+function txt(m){var e=document.getElementById("qt");if(e)e.textContent=m}
+function startCam(){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return txt("Câmera indisponível neste navegador. Use a leitura simulada.");
+navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}}).then(function(st){var v=document.getElementById("qv");if(!v||!S.qr){st.getTracks().forEach(function(t){t.stop()});return}CAM=st;v.srcObject=st;v.play();
+if("BarcodeDetector" in window){var bd=new BarcodeDetector({formats:["qr_code"]});TMR=setInterval(function(){bd.detect(v).then(function(c){if(c.length)qrRead(c[0].rawValue)}).catch(function(){})},500)}else txt("Leitura automática indisponível aqui. Use a leitura simulada.")}).catch(function(){txt("Não foi possível abrir a câmera. Use a leitura simulada.")})}
+function stopCam(){clearInterval(TMR);if(CAM){CAM.getTracks().forEach(function(t){t.stop()});CAM=null}}
+function closeQR(){stopCam();S.qr=false;ov()}
+function qrRead(t){var a=String(t).split("|"),mi=-1,pi=0,kg=parseFloat(String(a[3]).replace(",","."));M.forEach(function(x,i){if(x.n==a[2])mi=i});P.forEach(function(x,i){if(x.n==a[1])pi=i});
+if(a[0]!="ECOVALE"||mi<0||!(kg>0))return txt("QR Code não reconhecido. Use a nota do ponto parceiro.");
+stopCam();S.qr=false;add(mi,kg,pi);ov()}
+function simQR(){var pi=Math.floor(Math.random()*P.length),mi=Math.floor(Math.random()*M.length),kg=3+Math.floor(Math.random()*90)/10;qrRead("ECOVALE|"+P[pi].n+"|"+M[mi].n+"|"+kg.toFixed(1))}
+function closePop(g){S.pop=false;ov();if(g)go("ok")}
+function ov(){var h="";
+if(S.qr)h+='<div class="qs" role="dialog" aria-modal="true" aria-label="Leitor de QR Code"><video id="qv" playsinline muted></video><div class="qh"><b>Ler QR Code da nota</b><button onclick="closeQR()" aria-label="Fechar" style="font-size:26px;color:#fff">✕</button></div><div class="fr"><i class="scan"></i></div><div class="qf"><p id="qt" class="sm">Aponte a câmera para o QR Code da nota do ponto parceiro.</p><button class="btn y" style="margin-top:12px" onclick="simQR()">Simular leitura da nota</button><button class="btn" style="color:#fff;margin-top:6px" onclick="closeQR()">Cancelar</button></div></div>';
+if(S.pop&&S.last){var l=S.last;h+='<div class="mo" role="dialog" aria-modal="true"><div class="pp"><div class="ck" style="width:72px;height:72px;font-size:38px">✓</div><h2>Reciclagem registrada!</h2><div class="pts">+'+PT(l.v)+' pts</div><div class="sum"><span class="mu">Material</span><b>'+M[l.m].i+' '+M[l.m].n+'</b></div><div class="sum"><span class="mu">Peso</span><b>'+K(l.k)+' kg</b></div><div class="sum"><span class="mu">Ponto parceiro</span><b>'+P[S.pt].n+'</b></div><div class="sum"><span class="mu">Data</span><b>'+l.d+'</b></div>'+(S.scr!="ok"?'<button class="btn p" style="margin-top:16px" onclick="closePop(1)">Ver comprovante</button><button class="btn" style="margin-top:6px;color:var(--mu)" onclick="closePop()">Fechar</button>':'<button class="btn p" style="margin-top:16px" onclick="closePop()">Fechar</button>')+'</div></div>'}
+document.getElementById("ov").innerHTML=h}
+function toast(t){S.toast=t;draw();setTimeout(function(){S.toast="";draw()},1800)}
+function draw(){var y=S.scr!="login"&&S.scr!="signup";$.innerHTML=V[S.scr]()+(y?nav():"")+(S.toast?'<div class="toast" role="status">'+S.toast+'</div>':"")}
+draw();
+</script>
+</body>
+</html>
